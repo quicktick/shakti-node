@@ -1,0 +1,64 @@
+{
+  "name": "shakti-node",
+  "version": "0.0.1",
+  "description": "",
+  "license": "ISC",
+  "main": "src/index.js",
+  "scripts": {
+    "check:node": "check-node-version --package",
+    "ci": "yarn run lint:js && yarn run test",
+    "precommit": "lint-staged && yarn run lint",
+    "eslint-check": "eslint --print-config .eslintrc | eslint-config-prettier-check",
+    "format:js": "prettier --single-quote --trailing-comma all --no-semi --print-width 180 --write \"{src,test}/**/*.js\"",
+    "postinstall": "yarn run check:node",
+    "lint": "yarn run lint:js",
+    "lint:js": "eslint ./src ./test --ext=js",
+    "lint:js:without:prettier": "yarn run lint:js -- --rule 'prettier/prettier: 0'",
+    "lint:watch": "nodemon --watch src --exec \"yarn run lint:without:prettier\"",
+    "lint:without:prettier": "yarn run lint:js:without:prettier",
+    "start": "node --es-module-specifier-resolution=node --experimental-loader ./customLoader.mjs src/index.js",
+    "start:built": "forever build/index.js",
+    "start:debug": "node inspect --es-module-specifier-resolution=node --experimental-loader ./customLoader.mjs src/index.js",
+    "start:docker": "docker build -t lead-finder-server . && docker run --rm -it lead-finder-server",
+    "test": "NODE_OPTIONS=\"--experimental-specifier-resolution node --experimental-loader ./customLoader.mjs\" node_modules/.bin/mocha test/index.cjs --delay",
+    "test:watch": "nodemon -w src -w test --exec 'yarn run test'"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "shelljs": "^0.8.3"
+  },
+  "devDependencies": {
+    "@kparc/k": "^1.2.0",
+    "babel-eslint": "^7.2.3",
+    "chai": "^4.0.1",
+    "chai-moment": "^0.1.0",
+    "check-node-version": "^2.1.0",
+    "eslint": "^4.18.2",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-config-prettier": "^2.1.0",
+    "eslint-plugin-import": "2.2.0",
+    "eslint-plugin-prettier": "^2.0.1",
+    "forever": "^0.15.3",
+    "husky": "^1.0.1",
+    "lint-staged": "^7.3.0",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.19.4",
+    "prettier": "^1.2.2",
+    "sort-package-json": "^1.15.0"
+  },
+  "engines": {
+    "node": ">= 13.4 < 14"
+  },
+  "engine-strict": true,
+  "lint-staged": {
+    "{src,test}/**/*.js": [
+      "yarn format:js --",
+      "git add"
+    ],
+    "package.json": [
+      "sort-package-json",
+      "git add"
+    ]
+  },
+  "type": "module"
+}
