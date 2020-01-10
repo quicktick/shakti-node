@@ -3,17 +3,19 @@ import path from 'path'
 import fs from 'fs'
 import _ from 'lodash'
 import shell from 'shelljs'
+import uuid from 'uuid/v4';
 
 const RESULT_DIVIDER = `78543165645`
 
 const defaultOptions = {
   commandToExecute: './node_modules/@kparc/k/bin/k',
+  baseDirectory: os.tmpdir()
 }
 
 const codeForJsonParse = kCode => `${kCode}\n\` 1: "${RESULT_DIVIDER}"\n\` 1: \`j(result)\n\\\\`
 
-const writeKFile = kCode => {
-  const testFile = path.join(os.tmpdir(), 'test.k')
+const writeKFile = (kCode, userOptions) => {
+  const testFile = path.resolve(path.join(userOptions.baseDirectory, `${uuid()}.k`))
   fs.writeFileSync(testFile, kCode)
   return testFile
 }
@@ -28,8 +30,11 @@ const parseKOutput = kOutput => {
 
 export const runShaktiCommand = (kCode, userOptions) => {
   const options = { ...defaultOptions, ...userOptions }
-  const newKFile = writeKFile(kCode)
-  return shell.exec(`${options.commandToExecute} ${newKFile}`, { silent: true })
+  const newKFile = writeKFile(kCode, options)
+  const command = `(${options.commandToExecute} ${newKFile})`
+  const output = shell.exec(command, { silent: true })
+  fs.unlinkSync(newKFile)
+  return output
 }
 
 export const runShakti = (kCode, userOptions) => {
