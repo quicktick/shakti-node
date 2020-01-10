@@ -1,24 +1,29 @@
-## Getting started
+# shakti-node
 
-First run: `npm install`
+Run shakti code and get the results inside node.
 
-Then run:
+```
+runShakti('result: 1 2 3')
+# [1,2,3]
+```
 
-* Run `npm run start` to run the app
-* Run `npm run start:debug` to debug the app in chrome debugger
+assign your output to a variable `result` in your shakti code.
 
-### Debugging
+any shakti errors are thrown in node
 
-Run `npm run start:debug` and then open the link provided to you to debug.
+## Functions
 
-If your process doesn't run for long (It's not a web server or something). Then the debugger won't attach before the program finishes!
+```
+runShakti('result: 1 2 3')
+# [1,2,3]
+```
 
-`npm run start:debug -- --debug-brk` <- pauses the program on the first line so you can attach with plenty of time.
+```
+runShaktiFromFile('./myFile.k')
+```
 
-At this point you'll notice your files aren't in the debugger, so you still can't debug.
+```
+runShaktiCommand('result: 1 2 3')
+# {stderror: '', stdout: '', code: 1}
+```
 
-You can fix this using `debugger;` in your code:
-
-Add a `debugger;` line in your code somewhere.
-
-Now debug again. When you press play, you'll go to that `debugger` line you set. Everything works fine from there.

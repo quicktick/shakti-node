@@ -43,7 +43,7 @@
     "lint-staged": "^7.3.0",
     "mocha": "^5.2.0",
     "nodemon": "^1.19.4",
-    "prettier": "^1.2.2",
+    "prettier": "^1.19.1",
     "sort-package-json": "^1.15.0"
   },
   "engines": {
