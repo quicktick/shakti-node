@@ -2,7 +2,7 @@
 
 const { sync: globSync } = require('glob')
 ;(async () => {
-  const matches = globSync('test/**/*.js')
+  const matches = globSync('test/**/*.mjs')
   for (const match of matches) {
     await import('../' + match)
   }

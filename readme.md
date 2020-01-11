@@ -45,3 +45,8 @@ runShakti('`hello + 1')
 # throws type error
 ```
 
+## Common errors
+
+### `Error: No valid exports main found for`
+
+You need to run your program with `--experimental-conditional-exports` flag passed to node.
