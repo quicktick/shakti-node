@@ -1,6 +1,6 @@
 {
   "name": "shakti-node",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Call shakti code from inside node and get result back into node.",
   "repository": {
     "type": "git",
