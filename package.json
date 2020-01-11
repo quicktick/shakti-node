@@ -45,7 +45,7 @@
     "sort-package-json": "^1.15.0"
   },
   "engines": {
-    "node": ">= 13.4 < 14"
+    "node": ">= 13.4"
   },
   "engine-strict": true,
   "exports": {
